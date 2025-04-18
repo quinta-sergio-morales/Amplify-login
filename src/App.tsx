@@ -1,6 +1,5 @@
 import { Amplify } from 'aws-amplify';
 import { useState } from 'react';
-import { withAuthenticator } from '@aws-amplify/ui-react';
 import { JWT, signIn } from 'aws-amplify/auth';
 import { fetchAuthSession } from 'aws-amplify/auth';
 
@@ -31,7 +30,7 @@ Amplify.configure({
 });
 
 
-export function App() {
+export default function App() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -83,5 +82,3 @@ export function App() {
     </div>
   );
 }
-
-export default withAuthenticator(App);
