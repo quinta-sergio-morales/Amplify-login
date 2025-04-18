@@ -1,35 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Amplify } from 'aws-amplify';
+import { useState } from 'react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { signIn, type SignInInput } from 'aws-amplify/auth';
 
-function App() {
-  const [count, setCount] = useState(0)
+Amplify.configure({
+  Auth: {
+    Cognito: {
+      userPoolId: 'us-east-1_JSWAO5YTo',
+      userPoolClientId: '4qnhv31f78s3uido7iub8b2b7c',
+      signUpVerificationMethod: 'code', // 'code' | 'link'
+      loginWith: {
+        // OPTIONAL - Hosted UI configuration
+        oauth: {
+          domain: 'https://us-east-1jswao5yto.auth.us-east-1.amazoncognito.com',
+          scopes: [
+            'phone',
+            'email',
+            'profile',
+            'openid',
+            'aws.cognito.signin.user.admin'
+          ],
+          redirectSignIn: ['https://main.d1x9uyh5hf29ts.amplifyapp.com/'],
+          redirectSignOut: ['http://localhost:5173/'],
+          responseType: 'code' 
+        }
+      }
+    }
+  }
+});
 
+
+export function App() {
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function handleSignIn(e : React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { isSignedIn, nextStep } = await signIn({ username: user, password });
+      setLoading(false);
+      console.log('isSignedIn:', isSignedIn);
+    } catch (error) {
+      console.log('error signing in', error);
+    }
+  }
+  
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="form-container">
+      <h2>Sign In</h2>
+      <form onSubmit={handleSignIn}>
+        <div className="form-group">
+          <label>Email</label>
+          <input 
+            type="text" 
+            value={user} 
+            onChange={(e) => setUser(e.target.value)} 
+            required 
+          />
+        </div>
+        <div className="form-group">
+          <label>Password</label>
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
+        </div>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Signing In...' : 'Sign In'}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      </form>
+    </div>
+  );
+
 }
 
-export default App
+export default withAuthenticator(App);
