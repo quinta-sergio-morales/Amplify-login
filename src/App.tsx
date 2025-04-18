@@ -1,7 +1,8 @@
 import { Amplify } from 'aws-amplify';
 import { useState } from 'react';
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import { signIn, type SignInInput } from 'aws-amplify/auth';
+import { JWT, signIn } from 'aws-amplify/auth';
+import { fetchAuthSession } from 'aws-amplify/auth';
 
 Amplify.configure({
   Auth: {
@@ -34,6 +35,7 @@ export function App() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [idToken, setIdToken] = useState<JWT>();
 
   async function handleSignIn(e : React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,6 +45,9 @@ export function App() {
       const { isSignedIn, nextStep } = await signIn({ username: user, password });
       setLoading(false);
       console.log('isSignedIn:', isSignedIn);
+      console.log('nextStep:', nextStep);
+      const { idToken } = (await fetchAuthSession()).tokens ?? {};
+      setIdToken(idToken);
     } catch (error) {
       console.log('error signing in', error);
     }
@@ -74,9 +79,9 @@ export function App() {
           {loading ? 'Signing In...' : 'Sign In'}
         </button>
       </form>
+      {idToken && <p>ID token: {idToken.toString()}</p>}
     </div>
   );
-
 }
 
 export default withAuthenticator(App);
