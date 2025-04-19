@@ -1,6 +1,7 @@
 import { Amplify } from 'aws-amplify';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { JWT, signIn, signInWithRedirect } from 'aws-amplify/auth';
+import { getCurrentUser } from 'aws-amplify/auth';
 import {
   fetchAuthSession,
 } from 'aws-amplify/auth';
@@ -37,6 +38,17 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [idToken, setIdToken] = useState<JWT>();
+  const [userData, setUserData] = useState<{ name: string } | undefined>(undefined);
+
+  useEffect(() => {
+    try {
+      getCurrentUser().then((authUser) => {
+        setUserData({name: authUser.username})
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   async function handleSignIn(e : React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -89,6 +101,7 @@ export default function App() {
         Sign with Google
       </button>
       {idToken && <p>ID token: {idToken.toString()}</p>}
+      {userData && <p>Hello user: {userData.name}</p>}
     </div>
   );
 }
