@@ -1,6 +1,6 @@
 import { Amplify } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { JWT, signIn, signInWithRedirect } from 'aws-amplify/auth';
+import { JWT, signIn, signInWithRedirect, signOut } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
 import {
   fetchAuthSession,
@@ -49,6 +49,14 @@ export default function App() {
       console.log(err);
     }
   });
+
+  async function handleSignOut() {
+    try {
+      await signOut({ global: true });
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  }
 
   async function handleSignIn(e : React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -101,7 +109,17 @@ export default function App() {
         Sign with Google
       </button>
       {idToken && <p>ID token: {idToken.toString()}</p>}
-      {userData && <p>Hello user: {userData.name}</p>}
+      {userData && (
+        <div>
+          <p>
+            Hello user: {userData.name}
+          </p>
+          <button onClick={handleSignOut}>
+            Sign with Google
+          </button>
+        </div>
+        
+      )}
     </div>
   );
 }
