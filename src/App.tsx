@@ -75,7 +75,8 @@ export default function App() {
    * 
    */
 
-  async function handleSignUpConfirmation() {
+  async function handleSignUpConfirmation(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
     try {
       const { isSignUpComplete} = await confirmSignUp({
         username: user,
@@ -93,7 +94,8 @@ export default function App() {
     }
   }
 
-  async function handleSignUp() {
+  async function handleSignUp(e : React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     try {
       const { userId, nextStep } = await signUp({
         username: user,
@@ -159,7 +161,7 @@ export default function App() {
       <hr/>
       <div className="form-container">
             <h2>Create Account</h2>
-            <form onSubmit={handleSignUp}>
+            <form onSubmit={(e) => handleSignUp(e)}>
               <div className="form-group">
                 <label>Email</label>
                 <input 
@@ -195,7 +197,7 @@ export default function App() {
       {verify && (
         <div>
           <h2>Verify Your Account</h2>
-          <form onSubmit={handleSignUpConfirmation}>
+          <form onSubmit={(e) => handleSignUpConfirmation(e)}>
                 <label>Verification Code</label>
                 <input 
                   type="text" 
