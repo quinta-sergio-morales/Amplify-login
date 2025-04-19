@@ -23,7 +23,7 @@ Amplify.configure({
             'openid',
             'aws.cognito.signin.user.admin'
           ],
-          redirectSignIn: ['https://main.d1x9uyh5hf29ts.amplifyapp.com/'],
+          redirectSignIn: ['https://main.d5ccdrnzzzrp5.amplifyapp.com/'],
           redirectSignOut: ['http://localhost:5173/'],
           responseType: 'code' 
         }
