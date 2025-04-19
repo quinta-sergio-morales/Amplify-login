@@ -169,6 +169,14 @@ export default function App() {
                   required 
                 />
               </div>
+                    <label>User name</label>
+                <input 
+                  type="text" 
+                  value={user} 
+                  onChange={(e) => setUser(e.target.value)} 
+                  required 
+                />
+
               <div className="form-group">
                 <label>Password</label>
                 <input 
