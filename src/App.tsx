@@ -103,6 +103,7 @@ export default function App() {
         options: {
           userAttributes: {
             email,
+            name: user,
           }
         }
       });
