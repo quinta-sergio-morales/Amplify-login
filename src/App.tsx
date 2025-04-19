@@ -12,7 +12,7 @@ Amplify.configure({
       loginWith: {
         // OPTIONAL - Hosted UI configuration
         oauth: {
-          domain: 'https://us-east-1jswao5yto.auth.us-east-1.amazoncognito.com',
+          domain: 'us-east-1jswao5yto.auth.us-east-1.amazoncognito.com',
           scopes: [
             'phone',
             'email',
