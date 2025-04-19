@@ -1,10 +1,8 @@
 import { Amplify } from 'aws-amplify';
 import { useState, useEffect } from 'react';
-import { JWT, signIn, signInWithRedirect, signOut } from 'aws-amplify/auth';
+import { signIn, signInWithRedirect, signOut, signUp, confirmSignUp, autoSignIn } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
-import {
-  fetchAuthSession,
-} from 'aws-amplify/auth';
+//import {fetchAuthSession, JWT} from 'aws-amplify/auth';
 
 
 Amplify.configure({
@@ -36,13 +34,18 @@ Amplify.configure({
 export default function App() {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [idToken, setIdToken] = useState<JWT>();
+  const [verify, showVerify] = useState(false)
+  const [code , setCode] = useState('')
+
+  //const [idToken, setIdToken] = useState<JWT>();
   const [userData, setUserData] = useState<{ name: string } | undefined>(undefined);
 
   useEffect(() => {
     try {
       getCurrentUser().then((authUser) => {
+        console.log(authUser.signInDetails )
         setUserData({name: authUser.username})
       })
     } catch (err) {
@@ -53,8 +56,59 @@ export default function App() {
   async function handleSignOut() {
     try {
       await signOut({ global: true });
+      setUserData(undefined)
     } catch (error) {
       console.log('error signing out: ', error);
+    }
+  }
+  /**
+   * 
+   *   async function getIdToken(): Promise<JWT | undefined>{
+    try {
+      const { idToken } = (await fetchAuthSession()).tokens ?? {};
+
+      return idToken
+    } catch(error){
+      console.log('token fetch error: ', error);
+    }
+  }
+   * 
+   */
+
+  async function handleSignUpConfirmation() {
+    try {
+      const { isSignUpComplete} = await confirmSignUp({
+        username: user,
+        confirmationCode: code
+      });
+
+      if(isSignUpComplete) {
+        showVerify(false);
+        const signInOutput = await autoSignIn();
+        console.log(signInOutput)
+      }
+
+    } catch (error) {
+      console.log('error confirming sign up', error);
+    }
+  }
+
+  async function handleSignUp() {
+    try {
+      const { userId, nextStep } = await signUp({
+        username: user,
+        password,
+        options: {
+          userAttributes: {
+            email,
+          }
+        }
+      });
+      if(nextStep.signUpStep === "CONFIRM_SIGN_UP") showVerify(true)
+  
+      console.log(userId);
+    } catch (error) {
+      console.log('error signing up:', error);
     }
   }
 
@@ -67,8 +121,6 @@ export default function App() {
       setLoading(false);
       console.log('isSignedIn:', isSignedIn);
       console.log('nextStep:', nextStep);
-      const { idToken } = (await fetchAuthSession()).tokens ?? {};
-      setIdToken(idToken);
     } catch (error) {
       console.log('error signing in', error);
     }
@@ -105,17 +157,59 @@ export default function App() {
         </button>
       </form>
       <hr/>
+      <div className="form-container">
+            <h2>Create Account</h2>
+            <form onSubmit={handleSignUp}>
+              <div className="form-group">
+                <label>Email</label>
+                <input 
+                  type="email" 
+                  value={email} 
+                  onChange={(e) => setEmail(e.target.value)} 
+                  required 
+                />
+              </div>
+              <div className="form-group">
+                <label>Password</label>
+                <input 
+                  type="password" 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)} 
+                  required 
+                />
+              </div>
+              <button type="submit" disabled={loading}>
+                {loading ? 'Creating Account...' : 'Create Account'}
+              </button>
+            </form>
+          </div>
+      <hr/>
+      {verify && (
+        <div>
+          <h2>Verify Your Account</h2>
+          <form onSubmit={handleSignUpConfirmation}>
+                <label>Verification Code</label>
+                <input 
+                  type="text" 
+                  value={code} 
+                  onChange={(e) => setCode(e.target.value)} 
+                  required 
+                />
+              </form>
+        </div>
+      )}
+      <hr/>
       <button onClick={handleGoogleSignIn}>
         Sign with Google
       </button>
-      {idToken && <p>ID token: {idToken.toString()}</p>}
+      <hr/>
       {userData && (
         <div>
           <p>
             Hello user: {userData.name}
           </p>
           <button onClick={handleSignOut}>
-            Sign with Google
+            Sign out
           </button>
         </div>
         
