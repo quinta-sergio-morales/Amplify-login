@@ -1,18 +1,21 @@
 import { Amplify } from 'aws-amplify';
 import { useState } from 'react';
 import { JWT, signIn, signInWithRedirect } from 'aws-amplify/auth';
-import { fetchAuthSession } from 'aws-amplify/auth';
+import {
+  fetchAuthSession,
+} from 'aws-amplify/auth';
+
 
 Amplify.configure({
   Auth: {
     Cognito: {
-      userPoolId: 'us-east-1_JSWAO5YTo',
-      userPoolClientId: '4qnhv31f78s3uido7iub8b2b7c',
+      userPoolId: 'us-east-1_QfVuwRTTC',
+      userPoolClientId: '3esrctfmilo18fv9a58ovukhlb',
       signUpVerificationMethod: 'code', // 'code' | 'link'
       loginWith: {
         // OPTIONAL - Hosted UI configuration
         oauth: {
-          domain: 'us-east-1jswao5yto.auth.us-east-1.amazoncognito.com',
+          domain: 'us-east-1qfvuwrttc.auth.us-east-1.amazoncognito.com',
           scopes: [
             'phone',
             'email',
@@ -28,7 +31,6 @@ Amplify.configure({
     }
   }
 });
-
 
 export default function App() {
   const [user, setUser] = useState('');
