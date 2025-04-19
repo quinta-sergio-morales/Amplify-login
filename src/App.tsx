@@ -206,6 +206,9 @@ export default function App() {
                   onChange={(e) => setCode(e.target.value)} 
                   required 
                 />
+                <button type="submit">
+                Verify
+              </button>
               </form>
         </div>
       )}
