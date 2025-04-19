@@ -1,6 +1,6 @@
 import { Amplify } from 'aws-amplify';
 import { useState } from 'react';
-import { JWT, signIn } from 'aws-amplify/auth';
+import { JWT, signIn, signInWithRedirect } from 'aws-amplify/auth';
 import { fetchAuthSession } from 'aws-amplify/auth';
 
 Amplify.configure({
@@ -51,13 +51,17 @@ export default function App() {
       console.log('error signing in', error);
     }
   }
+
+  async function handleGoogleSignIn(){
+    signInWithRedirect({provider: "Google"})
+  }
   
   return (
     <div className="form-container">
       <h2>Sign In</h2>
       <form onSubmit={handleSignIn}>
         <div className="form-group">
-          <label>Email</label>
+          <label>User name</label>
           <input 
             type="text" 
             value={user} 
@@ -78,6 +82,10 @@ export default function App() {
           {loading ? 'Signing In...' : 'Sign In'}
         </button>
       </form>
+      <hr/>
+      <button onClick={handleGoogleSignIn}>
+        Sign with Google
+      </button>
       {idToken && <p>ID token: {idToken.toString()}</p>}
     </div>
   );
