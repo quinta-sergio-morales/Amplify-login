@@ -45,7 +45,6 @@ export default function App() {
   useEffect(() => {
     try {
       getCurrentUser().then((authUser) => {
-        console.log(authUser.signInDetails )
         setUserData({name: authUser.username})
       })
     } catch (err) {
@@ -104,7 +103,8 @@ export default function App() {
           userAttributes: {
             email,
             name: user,
-          }
+          },
+          autoSignIn: true
         }
       });
       if(nextStep.signUpStep === "CONFIRM_SIGN_UP") showVerify(true)
