@@ -93,6 +93,18 @@ const SignInForm: React.FC<AuthFormProps> = ({
                     {isLoading ? 'Signing In...' : 'Sign In'}
                 </Button>
             </div>
+
+            <div className="text-center mt-3 text-sm">
+                <span className="text-gray-600">Need an account? </span>
+                <button
+                    type="button"
+                    onClick={() => setFormType && setFormType('signUp')}
+                    disabled={isLoading}
+                    className="font-medium cursor-pointer text-indigo-600 hover:text-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Not registered? Create Account
+                </button>
+            </div>
         </div>
     );
 };
