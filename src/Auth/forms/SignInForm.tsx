@@ -21,9 +21,9 @@ const SignInForm: React.FC<AuthFormProps> = ({
 
     return (
         <div> 
-            <h2>Sign In</h2>
-            <div className='py-8'>
-                <button type="button" className="w-full p-2 rounded-lg flex items-center justify-center gap-4 border-slate-50 border-2" onClick={handleGoogleSignIn} disabled={isLoading}>
+            <h2 className='text-xl font-bold'>Sign In</h2>
+            <div className='py-4'>
+                <button type="button" className="w-full p-2 rounded-xl flex items-center justify-center gap-4 border-slate-100 border-2" onClick={handleGoogleSignIn} disabled={isLoading}>
                     <img src={googleIcon} className='w-6'/>
                     <p>Sign In with Google</p>
                 </button>

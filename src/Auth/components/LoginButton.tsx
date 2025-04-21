@@ -31,7 +31,7 @@ const Button = forwardRef<HTMLButtonElement, LoginButtonProps>(
     return (
       <button
         className={cn(
-          'rounded-lg', // Base styles
+          'rounded-lg p-2', // Base styles
           'flex items-center gap-2', // Flex layout styles
           iconLocation === 'right' && 'flex-row-reverse justify-between',
           !IconComponent && 'justify-center', // Check if IconComponent exists

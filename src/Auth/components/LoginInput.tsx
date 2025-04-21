@@ -20,7 +20,7 @@ export default function Input({label, id, register, error, type = 'text', ...res
         type={type}
         {...register}
         {...rest}
-        className={`block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${
+        className={`block p-2 w-full rounded-md border-gray-300 shadow-sm  sm:text-sm ${
           error ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : '' // Add red border on error
         }`}
       />
