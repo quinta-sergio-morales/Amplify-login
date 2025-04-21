@@ -42,7 +42,7 @@ type FormsConfig = {
 // Form config remains the same
 const forms : FormsConfig  =  {
     signIn: { Component: SignInForm, defaultValues: { username: '', password: '' } },
-    signUp: { Component: SignUpForm, defaultValues: { username: '', email: '', password: '', confirmPassword: '' } },
+    signUp: { Component: SignUpForm, defaultValues: { username: '', email: '', password: '', confirmPassword: '', fullName: '' } },
     confirmSignUp: { Component: ConfirmSignUpForm, defaultValues: { username: '', code: '' } },
     forgotPassword: { Component: ForgotPasswordForm, defaultValues: { username: '' } },
     newPassword: { Component: NewPasswordForm, defaultValues: { username: '', code: '', newPassword: '', confirmPassword: '' } },
