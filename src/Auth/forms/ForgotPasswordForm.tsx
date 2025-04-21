@@ -15,7 +15,7 @@ const ForgotPasswordForm: React.FC<AuthFormProps> = ({
         // Assuming FormContainer provides the outer div, title, and padding
         <div>
             <h2 className='text-xl font-bold mb-4'>Reset Password</h2>
-            <p className="mb-4 text-sm text-gray-600 text-center">
+            <p className="mb-4 text-neutral-900 ">
                 Enter your username, and we'll send a code to reset your password.
             </p>
 

@@ -2,11 +2,9 @@ export default function LoginLayout({children}: {children: React.ReactNode}){
     return (
         <div className="flex min-h-screen w-screen overflow-hidden">
 
-        <div className="flex flex-auto bg-white">
-            <div className="px-4 md:px-0 grid grid-cols-1 md:grid-cols-[minmax(48px,1fr)_minmax(auto,768px)_minmax(48px,1fr)]">
-                <div className="lg:col-start-2 lg:col-end-3 flex flex-col justify-center">
-                    {children}
-                </div>
+        <div className="flex-auto bg-white px-4 md:px-0 grid grid-cols-1 md:grid-cols-[minmax(48px,1fr)_minmax(auto,768px)_minmax(48px,1fr)]">
+            <div className="lg:col-start-2 lg:col-end-3 flex flex-col justify-center">
+                {children}
             </div>
         </div>
 

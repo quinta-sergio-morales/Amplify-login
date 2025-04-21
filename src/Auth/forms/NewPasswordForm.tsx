@@ -72,15 +72,11 @@ const NewPasswordForm: React.FC<AuthFormProps> = ({
                         autoComplete="new-password"
                         aria-describedby="new-password-requirements" // Link to requirements
                     />
-                    <ul className="mt-1 list-disc list-outside text-xs text-gray-500 space-y-1">
+                    <ul className="mt-2 ml-5 list-disc list-outside text-xs text-gray-500 space-y-1">
                         {passwordRequirements.map((req, index) => (
                             <li key={index}>{req}</li>
                         ))}
                     </ul>
-                    {/* Error handled by Input component, but display below list if needed */}
-                    {errors.newPassword && (
-                        <p className="mt-1 text-xs text-red-600">{errors.newPassword.message}</p>
-                    )}
                 </div>
 
 

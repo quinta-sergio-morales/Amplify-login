@@ -26,7 +26,7 @@ export default function Input({label, id, register, error, type = 'text', ...res
       />
       {/* Display validation error message */}
       {error && (
-        <p id={`${id}-error`} className="mt-1 text-xs text-red-600">
+        <p id={`${id}-error`} className="mt-1 mb-2 text-xs text-red-600">
           {error.message}
         </p>
       )}

@@ -80,7 +80,7 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                         disabled={isLoading}
                     />
                     {/* Password Requirements List */}
-                    <ul id="password-requirements" className="mt-1 list-disc list-outside text-xs text-gray-500 space-y-1">
+                    <ul id="password-requirements" className="mt-2 ml-5 list-disc list-outside text-xs text-gray-500 space-y-1">
                         {passwordRequirements.map((req, index) => (
                             <li key={index}>{req}</li>
                         ))}
