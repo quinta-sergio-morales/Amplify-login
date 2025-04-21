@@ -45,7 +45,13 @@ const signUpHandler: AuthHandler<SignUpFormData> = async (
         const { isSignUpComplete, userId, nextStep }: SignUpOutput = await signUp({
             username: data.username,
             password: data.password,
-            options: { userAttributes: { email: data.email, name: data.username } }
+            options: { 
+                userAttributes: { 
+                    email: data.email, 
+                    name: data.username 
+                },
+                autoSignIn: true
+            },
         });
         console.log('Sign up result:', { isSignUpComplete, userId, nextStep });
         if (nextStep.signUpStep === 'CONFIRM_SIGN_UP') {
@@ -57,6 +63,7 @@ const signUpHandler: AuthHandler<SignUpFormData> = async (
         }
     } catch (err: any) {
         console.error("Sign In error: ", err);
+        setApiError('Unexpected error: Failed to complete sign up.');
     }
 };
 
@@ -79,6 +86,12 @@ const confirmSignUpHandler: AuthHandler<ConfirmSignUpFormData> = async (
         }
     } catch (err: any) {
         console.error("Confirmation error: ", err);
+        if(err.code === 'CodeMismatchException')
+            setApiError('Failed to confirm sign up: the confirmation code was incorrect.');
+        else if(err.code === 'ExpiredCodeException')
+            setApiError('Failed to confirm sign up: the confirmation code has expired.');
+        else 
+            setApiError('Failed to confirm sign up.');
     }
 };
 
