@@ -11,6 +11,7 @@ export interface SignInFormData {
 export interface SignUpFormData {
     username: string;
     email: string;
+    fullName: string;
     password: string;
     confirmPassword?: string; // Add this for frontend validation
 }
@@ -47,6 +48,7 @@ export interface AuthFormFields {
     confirmPassword?: string;
     email?: string;
     password?: string;
+    fullName?: string;
 }
 
 export interface AuthFormProps {

@@ -15,7 +15,7 @@ const ConfirmSignUpForm: React.FC<AuthFormProps> = ({
         <div>
             <h2 className='text-xl font-bold mb-4'>Verify Your Account</h2>
 
-            <p className="mb-4 text-sm text-gray-600 text-center">
+            <p className="mb-4 text-neutral-900 ">
                 A confirmation code was sent to your email<br />
                 Please enter the code below.
             </p>

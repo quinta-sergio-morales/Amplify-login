@@ -49,7 +49,7 @@ const signUpHandler: AuthHandler<SignUpFormData> = async (
             options: { 
                 userAttributes: { 
                     email: data.email, 
-                    name: data.username 
+                    name: data.fullName, 
                 },
                 autoSignIn: true
             },

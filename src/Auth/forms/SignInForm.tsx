@@ -54,7 +54,7 @@ const SignInForm: React.FC<AuthFormProps> = ({
                         type={showPassword ? 'text' : 'password'} 
                         register={register('password', { required: 'Password is required' })}
                         error={errors.password} 
-                        placeholder="••••••••"
+                        placeholder="Password"
                         disabled={isLoading}
                         autoComplete="current-password"
                     />

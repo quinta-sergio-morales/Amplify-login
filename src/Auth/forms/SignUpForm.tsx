@@ -10,12 +10,16 @@ const SignUpForm: React.FC<AuthFormProps> = ({
     isLoading,
     setFormType,
 }) => {
+    // Destructure register, errors, watch from form props
     const { register, formState: { errors }, watch } = form;
+    // Watch password for validation comparison
     const password = watch('password');
+    // State for password visibility toggle
     const [showPasswords, setShowPasswords] = useState(false);
+    // Function to toggle password visibility
     const togglePasswordsVisibility = () => setShowPasswords(!showPasswords);
 
-    // Define password requirements
+    // Define password requirements list
     const passwordRequirements = [
         "Password must be at least 8 characters",
         "Contain a number",
@@ -29,7 +33,6 @@ const SignUpForm: React.FC<AuthFormProps> = ({
         <div>
             <h2 className='text-xl font-bold mb-4'>Create Account</h2>
 
-            {/* Use flex flex-col and gap for consistent spacing */}
             <div className='flex flex-col gap-4'>
                 <Input
                     id="signup-username"
@@ -45,6 +48,21 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                     autoComplete="username"
                 />
 
+                <Input
+                    id="signup-fullName"
+                    label="Full Name"
+                    type="text"
+                    register={register('fullName', { 
+                        required: 'Full name is required',
+                    })}
+                    error={errors.fullName} 
+                    placeholder="Enter your full name"
+                    disabled={isLoading}
+                    autoComplete="name"
+                />
+
+
+                {/* Email Input */}
                 <Input
                     id="signup-email"
                     label="Email"
@@ -62,7 +80,8 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                     autoComplete="email"
                 />
 
-                <div> 
+                {/* Password Input Section */}
+                <div>
                     <Input
                         id="signup-password"
                         label="Password"
@@ -72,7 +91,7 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                             minLength: { value: 8, message: 'Password must be at least 8 characters' },
                             pattern: {
                                 value: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$/,
-                                message: 'Password does not meet requirements' // Keep message generic or remove if list is sufficient
+                                message: 'Password does not meet requirements'
                             }
                         })}
                         error={errors.password}
@@ -85,14 +104,10 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                             <li key={index}>{req}</li>
                         ))}
                     </ul>
-                     {/* Display validation error below the requirements list */}
-                     {errors.password && (
-                        <p className="mt-1 text-xs text-red-600">{errors.password.message}</p>
-                    )}
                 </div>
 
 
-                {/* Confirm Password Input */}
+                {/* Confirm Password Input Section */}
                  <div>
                     <Input
                         id="signup-confirmPassword"
@@ -105,8 +120,9 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                         error={errors.confirmPassword}
                         placeholder="Confirm Password"
                         disabled={isLoading}
-                        autoComplete="new-password"
+                        autoComplete="new-password" // Use new-password
                     />
+                    {/* Password Visibility Toggle */}
                     <div className="mt-1 flex items-center text-sm">
                         <button
                             type="button"
@@ -119,6 +135,7 @@ const SignUpForm: React.FC<AuthFormProps> = ({
                             {showPasswords ? 'Hide' : 'Show'} Passwords
                         </button>
                     </div>
+                     {/* Error message handled by Input component */}
                 </div>
 
 
