@@ -28,11 +28,11 @@ const alertConfig: Record<
 > = {
   error: {
     icon: AlertCircle,
-    styleClass: 'bg-gradient-to-b from-red-100 text-red-400', // Using bg-gradient-* instead of bg-linear-*
+    styleClass: 'border-red-400 text-red-400', // Using bg-gradient-* instead of bg-linear-*
   },
   warning: {
     icon: AlertTriangle,
-    styleClass: ' border-red-400',
+    styleClass: 'bg-gradient-to-b from-orange-100 text-orange-400',
   },
   info: {
     icon: Info,
