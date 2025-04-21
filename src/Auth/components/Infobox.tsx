@@ -53,7 +53,7 @@ export default function Infobox({
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center rounded-lg border p-2', // Base styles
+        'flex flex-col items-center justify-center rounded-lg border-2 p-2', // Base styles
         config.styleClass, 
         className 
       )}
