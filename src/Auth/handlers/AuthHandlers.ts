@@ -35,6 +35,7 @@ const signInHandler: AuthHandler<SignInFormData> = async (
         }
     } catch (err: any) {
         console.error("Sign In error: ", err);
+        setApiError('The user or password is incorrect.');
     }
 };
 

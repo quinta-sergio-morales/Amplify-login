@@ -1,4 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import LoginLayout from './components/LoginLayout';
+import FormContainer from './components/FormContainer';
+import Infobox from './components/Infobox';
+
 import { useForm, SubmitHandler} from 'react-hook-form';
 import {
     FormType,
@@ -45,7 +49,7 @@ const forms : FormsConfig  =  {
 };
 
 
-const AuthContainer: React.FC = () => {
+const AuthManager: React.FC = () => {
     const [formType, setFormType] = useState<FormType>('signIn');
     const [isLoading, setIsLoading] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
@@ -100,20 +104,26 @@ const AuthContainer: React.FC = () => {
     };
 
     return (
-        <div>
-            <div>
-                {apiError && <p role="alert" style={{ color: 'red' }}>{apiError}</p>}
-            </div>
-            <form onSubmit={form.handleSubmit(handleFormSubmit)} noValidate>
-                 <CurrentFormComponent
-                    form={form}
-                    isLoading={isLoading}
-                    setFormType={setFormType}
-                    handleGoogleSignIn={triggerGoogleSignIn}
-                />
-            </form>
-        </div>
+        <LoginLayout>
+            <FormContainer>
+                <form onSubmit={form.handleSubmit(handleFormSubmit)} noValidate>
+                    <CurrentFormComponent
+                        form={form}
+                        isLoading={isLoading}
+                        setFormType={setFormType}
+                        handleGoogleSignIn={triggerGoogleSignIn}
+                    />
+                </form>
+                {
+                    apiError && (
+                        <div className='w-full mt-8'>
+                            <Infobox type='error' message={apiError} />
+                        </div>
+                    )
+                }
+            </FormContainer>
+        </LoginLayout>
     );
 };
 
-export default AuthContainer;
+export default AuthManager;
