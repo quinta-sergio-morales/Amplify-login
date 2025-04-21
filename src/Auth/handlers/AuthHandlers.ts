@@ -45,7 +45,7 @@ const signUpHandler: AuthHandler<SignUpFormData> = async (
         const { isSignUpComplete, userId, nextStep }: SignUpOutput = await signUp({
             username: data.username,
             password: data.password,
-            options: { userAttributes: { email: data.email } }
+            options: { userAttributes: { email: data.email, name: data.username } }
         });
         console.log('Sign up result:', { isSignUpComplete, userId, nextStep });
         if (nextStep.signUpStep === 'CONFIRM_SIGN_UP') {

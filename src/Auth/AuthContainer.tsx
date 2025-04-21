@@ -84,11 +84,7 @@ const AuthContainer: React.FC = () => {
         }
 
         try {
-            await handler(
-                data,
-                setApiError,
-                setFormType,
-            );
+            await handler(data, setApiError,setFormType);
         } catch (err: any) {
             console.error("Unhandled form submission error:", err);
             setApiError('An unexpected error occurred during submission.');
