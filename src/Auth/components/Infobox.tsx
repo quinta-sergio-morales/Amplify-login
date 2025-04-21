@@ -32,7 +32,7 @@ const alertConfig: Record<
   },
   warning: {
     icon: AlertTriangle,
-    styleClass: 'bg-gradient-to-b from-orange-100 text-orange-400',
+    styleClass: ' border-red-400',
   },
   info: {
     icon: Info,
@@ -53,7 +53,7 @@ export default function Infobox({
   return (
     <div
       className={cn(
-        'flex flex-col items-center justify-center rounded-xl border border-slate-50 p-2 shadow-md', // Base styles
+        'flex flex-col items-center justify-center rounded-lg border p-2', // Base styles
         config.styleClass, 
         className 
       )}
